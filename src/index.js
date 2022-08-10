@@ -20,18 +20,18 @@ const controller = (() => {
     const editTask = () => {
 
     };
-    const removeTask = () => {
+    const removeTask = (event) => {
         application.removeTask();
-        DOM.removeTask();
+        DOM.removeTask(event);
     };
-    const togglePriority = () => {
+    const togglePriority = (event) => {
         application.togglePriority();
-        DOM.togglePriority();
+        DOM.togglePriority(event);
     };
 
     // Event Listeners
-    const addTaskBtn = document.querySelector('#add-task');
-    addTaskBtn.addEventListener('click', addTask);
+    const addTaskBtn = document.querySelector('#add-task-form');
+    addTaskBtn.addEventListener('click', DOM.renderTaskForm);
 
     return {addProject, removeProject, addTaskLocation, editTask, removeTask, togglePriority};
 })();

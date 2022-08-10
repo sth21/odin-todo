@@ -1,3 +1,4 @@
+// Modules
 import controller from '../index.js';
 
 // Media
@@ -19,6 +20,76 @@ const DOM = (() => {
     };
     const removeProject = () => {
 
+    };
+    const renderTaskForm = () => {
+        let main = document.querySelector('main');
+        
+        let overlay = document.createElement('div');
+        overlay.setAttribute('id', 'overlay');
+
+        let form = document.createElement('form');
+
+        let header = document.createElement('div');
+        header.classList.add('header');
+
+        let header2 = document.createElement('h2');
+        header2.textContent = 'Create a New Task';
+        header.appendChild(header2);
+
+        let image1 = new Image();
+        image1.src = remove;
+        image1.addEventListener('click', deleteForm);
+        header.appendChild(image1);
+
+        form.appendChild(header);
+
+        let title = document.createElement('input');
+        title.setAttribute('type', 'text');
+        title.setAttribute('id', 'title');
+        title.setAttribute('placeholder', 'title');
+        title.setAttribute('name', 'title');
+        title.setAttribute('required', '');
+        form.appendChild(title);
+
+        let description = document.createElement('textarea');
+        description.setAttribute('id', 'description');
+        description.setAttribute('placeholder', 'description');
+        description.setAttribute('name', 'description');
+        description.setAttribute('rows', '10');
+        description.setAttribute('cols', '40');
+        description.setAttribute('required', '');
+        form.appendChild(description);
+
+        let date = document.createElement('input');
+        date.setAttribute('type', 'date');
+        date.setAttribute('id', 'date');
+        date.setAttribute('name', 'date');
+        date.setAttribute('required', '');
+        form.appendChild(date);
+
+        let footer = document.createElement('div');
+        footer.classList.add('footer');
+
+        let image2 = new Image();
+        image2.src = star;
+        image2.addEventListener('click', togglePriority);
+        footer.appendChild(image2);
+
+        let submit = document.createElement('button');
+        submit.setAttribute('type', 'submit');
+        submit.setAttribute('id', 'add-task');
+        submit.textContent = 'Add Task';
+        footer.appendChild(submit);
+
+        form.appendChild(footer);
+
+        overlay.appendChild(form);
+
+        main.prepend(overlay);
+    };
+    const deleteForm = () => {
+        let overlay = document.querySelector('#overlay');
+        overlay.remove();
     };
     const addTask = () => {
         let main = document.querySelector('main');
@@ -80,7 +151,6 @@ const DOM = (() => {
         let oldElement = event.target;
         let newElement = new Image();
         if (oldElement.src === star) {
-            console.log('yah');
             newElement.src = fullstar;
         } else {
             newElement.src = star;
@@ -89,7 +159,7 @@ const DOM = (() => {
         event.target.parentNode.replaceChild(newElement, oldElement);
     };
 
-    return {renderPage, renderProjectForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {renderPage, renderTaskForm, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default DOM;
