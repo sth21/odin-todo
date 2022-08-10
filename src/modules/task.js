@@ -1,3 +1,5 @@
- export const taskFactory = (title, description, date, isPriority) => {
+const taskFactory = (title, description, date, isPriority) => {
     return {title, description, date, priorityStatus: isPriority};
 };
+
+export default taskFactory;

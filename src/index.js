@@ -10,11 +10,13 @@ const controller = (() => {
     const removeProject = () => {
 
     };
-    const addTask = () => {
+    const addTask = (event) => {
+        event.preventDefault();
         application.addTask();
         DOM.addTask();
+        DOM.deleteForm();
     };
-    const addTaskLocation = () => {
+    const findTaskLocation = () => {
 
     };
     const editTask = () => {
@@ -33,7 +35,9 @@ const controller = (() => {
     const addTaskBtn = document.querySelector('#add-task-form');
     addTaskBtn.addEventListener('click', DOM.renderTaskForm);
 
-    return {addProject, removeProject, addTaskLocation, editTask, removeTask, togglePriority};
+    document.addEventListener('submit', addTask);
+
+    return {addProject, removeProject, findTaskLocation, editTask, removeTask, togglePriority};
 })();
 
 export default controller;

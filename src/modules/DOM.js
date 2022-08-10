@@ -1,5 +1,6 @@
 // Modules
 import controller from '../index.js';
+import storage from './storage.js';
 
 // Media
 import circle from '../../dist/media/circle.png';
@@ -107,7 +108,7 @@ const DOM = (() => {
         left.appendChild(image1);
         
         let title = document.createElement('h3');
-        title.textContent = 'Title';
+        title.textContent = storage.inbox[storage.inbox.length - 1].title;
         left.appendChild(title);
 
         task.appendChild(left);
@@ -121,7 +122,11 @@ const DOM = (() => {
         right.appendChild(button);
 
         let image2 = new Image();
-        image2.src = star;
+        if (storage.inbox[storage.inbox.length - 1].priorityStatus === false) {
+            image2.src = star;
+        } else {
+            image2.src = fullstar;
+        }
         image2.addEventListener('click', controller.togglePriority);
         right.appendChild(image2);
 
