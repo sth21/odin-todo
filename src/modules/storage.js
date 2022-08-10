@@ -1,4 +1,4 @@
-const storage = (task) => {
+export const storage = (task) => {
     let inbox = [];
     let today = [];
     let week = [];

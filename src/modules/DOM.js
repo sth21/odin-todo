@@ -1,3 +1,6 @@
+import controller from '../index.js';
+
+// Media
 import circle from '../../dist/media/circle.png';
 import star from '../../dist/media/star.png';
 import edit from '../../dist/media/edit.png';
@@ -29,7 +32,7 @@ const DOM = (() => {
         
         let image1 = new Image();
         image1.src = circle;
-        image1.addEventListener('click', removeTask);
+        image1.addEventListener('click', controller.removeTask);
         left.appendChild(image1);
         
         let title = document.createElement('h3');
@@ -48,7 +51,7 @@ const DOM = (() => {
 
         let image2 = new Image();
         image2.src = star;
-        image2.addEventListener('click', togglePriority);
+        image2.addEventListener('click', controller.togglePriority);
         right.appendChild(image2);
 
         let image3 = new Image();
@@ -57,7 +60,7 @@ const DOM = (() => {
 
         let image4 = new Image();
         image4.src = remove;
-        image4.addEventListener('click', removeTask);
+        image4.addEventListener('click', controller.removeTask);
         right.appendChild(image4);
 
         task.appendChild(right);
@@ -82,11 +85,11 @@ const DOM = (() => {
         } else {
             newElement.src = star;
         }
-        newElement.addEventListener('click', togglePriority);
+        newElement.addEventListener('click', controller.togglePriority);
         event.target.parentNode.replaceChild(newElement, oldElement);
     };
 
-    // Properties / DOM Event Listeners
-    const addTaskBtn = document.querySelector('#add-task');
-    addTaskBtn.addEventListener('click', addTask);
+    return {renderPage, renderProjectForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
+
+export default DOM;

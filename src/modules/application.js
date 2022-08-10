@@ -1,8 +1,10 @@
+import controller from '../index.js';
+
 const application = (() => {
     const addProject = () => {
 
     };
-    const addLocations = () => {
+    const addLocation = () => {
 
     };
     const removeProject = () => {
@@ -20,4 +22,8 @@ const application = (() => {
     const togglePriority = () => {
 
     };
+
+    return {addProject, addLocation, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
+
+export default application;
