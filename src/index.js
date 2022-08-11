@@ -23,11 +23,11 @@ const controller = (() => {
 
     };
     const removeTask = (event) => {
-        application.removeTask();
+        application.removeTask(event);
         DOM.removeTask(event);
     };
     const togglePriority = (event) => {
-        application.togglePriority();
+        application.togglePriority(event);
         DOM.togglePriority(event);
     };
 

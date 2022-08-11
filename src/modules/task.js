@@ -1,5 +1,6 @@
 const taskFactory = (title, description, date, isPriority) => {
-    return {title, description, date, priorityStatus: isPriority};
+    let DOMlink;
+    return {title, description, date, priorityStatus: isPriority, DOMlink};
 };
 
 export default taskFactory;

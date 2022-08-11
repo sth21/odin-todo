@@ -20,7 +20,6 @@ const application = (() => {
         let title = document.querySelector('#title').value;
         let description = document.querySelector('#description').value;
         let date = document.querySelector('#date').value;
-        console.log(date);
         let isPriority = document.querySelector('.footer > img');
         if (isPriority.src === star) {
             isPriority = false;
@@ -28,16 +27,24 @@ const application = (() => {
             isPriority = true;
         }
         storage.inbox[storage.inbox.length] = taskFactory(title, description, date, isPriority);
-        console.log(storage.inbox[storage.inbox.length - 1]);
     };
     const editTask = () => {
 
     };
-    const removeTask = () => {
-
+    const removeTask = (event) => {
+        for (let i = 0; i < storage.inbox.length; ++i) {
+            if (storage.inbox[i].DOMlink === event.target.parentNode.parentNode) {
+                storage.inbox.splice(i, 1);
+            }
+            console.log(storage.inbox);
+        }
     };
-    const togglePriority = () => {
-        
+    const togglePriority = (event) => {
+        for (let i = 0; i < storage.inbox.length; ++i) {
+            if (storage.inbox[i].DOMlink === event.target.parentNode.parentNode) {
+                (storage.inbox[i].priorityStatus) ? storage.inbox[i].priorityStatus = false : storage.inbox[i].priorityStatus = true;
+            }
+        }
     };
 
     return {addProject, addLocation, removeProject, addTask, editTask, removeTask, togglePriority};

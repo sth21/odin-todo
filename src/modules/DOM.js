@@ -98,6 +98,7 @@ const DOM = (() => {
 
         let task = document.createElement('div');
         task.setAttribute('id', 'task');
+        storage.inbox[storage.inbox.length - 1].DOMlink = task;
         
         let left = document.createElement('div');
         left.classList.add('left');
