@@ -5,8 +5,11 @@ import taskFactory from './modules/task.js';
 
 const controller = (() => {
     let activeTask;
-    const addProject = () => {
-
+    const addProject = (event) => {
+        event.preventDefault();
+        application.addProject();
+        DOM.addProject();
+        DOM.deleteForm();
     };
     const removeProject = () => {
 
@@ -31,12 +34,14 @@ const controller = (() => {
         application.togglePriority(event);
         DOM.togglePriority(event);
     };
-    const isEditOrAdd = (event) => {
+    const checkFormPurpose = (event) => {
         let button = document.querySelector('form button');
         if (button.getAttribute('id') === 'add-task') {
             addTask(event);
-        } else {
+        } else if (button.getAttribute('id') === 'edit-task') {
             editTask(event);
+        } else {
+            addProject(event);
         }
     } 
     const linkTask = (event) => {
@@ -48,12 +53,15 @@ const controller = (() => {
     };
 
     // Event Listeners
+    const addProjectBtn = document.querySelector('#add-project-form');
+    addProjectBtn.addEventListener('click', DOM.renderProjectForm);
+
     const addTaskBtn = document.querySelector('#add-task-form');
     addTaskBtn.addEventListener('click', DOM.renderTaskForm);
 
-    document.addEventListener('submit', isEditOrAdd);
+    document.addEventListener('submit', checkFormPurpose);
 
-    return {activeTask, addProject, removeProject, linkTask, editTask, removeTask, togglePriority};
+    return {activeTask, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
 })();
 
 export default controller;

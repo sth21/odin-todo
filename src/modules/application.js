@@ -9,7 +9,8 @@ import fullstar from '../../dist/media/fullstar.png';
 
 const application = (() => {
     const addProject = () => {
-
+        let projectName = document.querySelector('#project-name').value
+        storage[`${projectName}`] = [];
     };
     const addLocation = () => {
 

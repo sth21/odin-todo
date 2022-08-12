@@ -1,9 +1,8 @@
 const storage = (() => {
     let inbox = [];
     let today = [];
-    let projects = [];
 
-    return {inbox, today, projects}
+    return {inbox, today}
 })();
 
 export default storage;

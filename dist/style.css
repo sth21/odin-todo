@@ -105,20 +105,25 @@ nav {
     height: 20%;
 }
 
+#projects {
+    overflow: scroll;
+    height: 55%;
+}
+
 h2 {
     font-size: 1.5rem;
     font-weight: bolder;
     padding-bottom: 10px;
 }
 
-.container, #add-project {
+.container, #add-project-form {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 15px;
 }
 
-.container:hover, #add-project:hover {
+.container:hover, #add-project:hover, main img:hover, button:hover, #add-task-form:hover, #add-project-form:hover {
     filter: brightness(200%);
 }
 
@@ -140,13 +145,16 @@ main > h2 {
     margin-bottom: 2.5%;
 }
 
-#task, #add-task-form {
+#task, #add-task-form, #add-project-form {
     height: 50px;
-    width: 50%;
     border-top: 1px solid var(--blue);
     display: flex;
     flex: 0 0 auto;
     align-items: center;
+}
+
+#task, #add-task-form {
+    width: 50%;
 }
 
 #add-task-form {
@@ -177,11 +185,6 @@ button {
 button:hover {
     background-color: var(--blue);
     color: white;
-    filter: brightness(200%);
-}
-
-main img:hover {
-    filter: brightness(200%);
 }
 
 #overlay {
@@ -225,6 +228,15 @@ form {
     gap: 20px;
 }
 
+.project-form {
+    height: 25%;
+    gap: 50px;
+}
+
+.project-form button {
+    width: 100px;
+}
+
 #view-task {
     height: 50%;
     gap: 40px;
@@ -234,6 +246,10 @@ form {
 .header, .footer {
     display: flex;
     align-items: center;
+}
+
+.project-footer {
+    justify-content: flex-end;
 }
 
 .header > h2, .footer > img {

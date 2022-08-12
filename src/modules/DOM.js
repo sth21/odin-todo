@@ -8,17 +8,75 @@ import star from '../../dist/media/star.png';
 import edit from '../../dist/media/edit.png';
 import remove from '../../dist/media/remove.png';
 import fullstar from '../../dist/media/fullstar.png';
-import { getOverlappingDaysInIntervals } from 'date-fns';
+import project from '../../dist/media/projects.png';
 
 const DOM = (() => {
     const renderPage = () => {
 
     };
     const renderProjectForm = () => {
+        let body = document.querySelector('body');
+        
+        let overlay = document.createElement('div');
+        overlay.setAttribute('id', 'overlay');
 
+        let form = document.createElement('form');
+        form.classList.add('project-form');
+
+        let header = document.createElement('div');
+        header.classList.add('header');
+
+        let header2 = document.createElement('h2');
+        header2.textContent = 'Add a Project';
+        header.appendChild(header2);
+
+        let image1 = new Image();
+        image1.src = remove;
+        image1.addEventListener('click', deleteForm);
+        header.appendChild(image1);
+
+        form.appendChild(header);
+
+        let name = document.createElement('input');
+        name.setAttribute('type', 'text');
+        name.setAttribute('id', 'project-name');
+        name.setAttribute('placeholder', 'project name');
+        name.setAttribute('name', 'projectName');
+        name.setAttribute('required', '');
+        form.appendChild(name);
+
+        let footer = document.createElement('div');
+        footer.classList.add('footer');
+        footer.classList.add('project-footer');
+
+        let submit = document.createElement('button');
+        submit.setAttribute('type', 'submit');
+        submit.textContent = 'Add Project';
+        footer.appendChild(submit);
+
+        form.appendChild(footer);
+
+        overlay.appendChild(form);
+
+        body.prepend(overlay);
     };
     const addProject = () => {
+        let projects = document.querySelector('#projects');
 
+        let header = document.querySelector('#projects > h2');
+
+        let container = document.createElement('div');
+        container.classList.add('container');
+
+        let image1 = new Image();
+        image1.src = project;
+        container.appendChild(image1);
+
+        let title = document.createElement('p');
+        title.textContent = document.querySelector('form input').value;
+        container.appendChild(title);
+
+        header.parentNode.insertBefore(container, header.nextSibling);
     };
     const removeProject = () => {
 
