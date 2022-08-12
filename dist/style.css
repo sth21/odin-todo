@@ -203,7 +203,7 @@ main img:hover {
     display: none;
 }
 
-form {
+form, #view-task {
     position: absolute;
     left: 50%;
     right: 50%;
@@ -211,7 +211,6 @@ form {
     transform: translate(-50%, -50%);
     bottom: 50%;
     width: 30%;
-    height: 50%;
     background-color: var(--grey);
     color: var(--blue);
     display: flex;
@@ -219,6 +218,17 @@ form {
     gap: 20px;
     border-radius: 15px;
     padding: 2.5%;
+}
+
+form {
+    height: 50%;
+    gap: 20px;
+}
+
+#view-task {
+    height: 50%;
+    gap: 40px;
+    overflow: scroll;
 }
 
 .header, .footer {
@@ -255,7 +265,7 @@ input[type="date"] {
     font-family: 'Roboto', sans-serif;
 }
 
-form button {
+form button, #view-task button {
     height: 40px;
     width: 80px;
 }

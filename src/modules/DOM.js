@@ -8,6 +8,7 @@ import star from '../../dist/media/star.png';
 import edit from '../../dist/media/edit.png';
 import remove from '../../dist/media/remove.png';
 import fullstar from '../../dist/media/fullstar.png';
+import { getOverlappingDaysInIntervals } from 'date-fns';
 
 const DOM = (() => {
     const renderPage = () => {
@@ -22,7 +23,17 @@ const DOM = (() => {
     const removeProject = () => {
 
     };
-    const renderTaskForm = () => {
+    const renderTaskForm = (event) => {
+        let isEdit = false;
+        breakme: if (event.target.getAttribute('id') === 'add-task-form') {
+            break breakme;
+        } else if (event.target.parentNode.getAttribute('id') === 'add-task-form') {
+            break breakme;
+        } else {
+            isEdit = true;
+            controller.activeTask = controller.linkTask(event);
+        }
+
         let main = document.querySelector('main');
         
         let overlay = document.createElement('div');
@@ -34,7 +45,7 @@ const DOM = (() => {
         header.classList.add('header');
 
         let header2 = document.createElement('h2');
-        header2.textContent = 'Create a New Task';
+        (isEdit) ? header2.textContent = 'Edit Task' : header2.textContent = 'Create a New Task';
         header.appendChild(header2);
 
         let image1 = new Image();
@@ -50,6 +61,7 @@ const DOM = (() => {
         title.setAttribute('placeholder', 'title');
         title.setAttribute('name', 'title');
         title.setAttribute('required', '');
+        (isEdit) ? title.value = controller.activeTask.title : title = title;
         form.appendChild(title);
 
         let description = document.createElement('textarea');
@@ -59,6 +71,7 @@ const DOM = (() => {
         description.setAttribute('rows', '10');
         description.setAttribute('cols', '40');
         description.setAttribute('required', '');
+        (isEdit) ? description.value = controller.activeTask.description : description = description;
         form.appendChild(description);
 
         let date = document.createElement('input');
@@ -66,20 +79,30 @@ const DOM = (() => {
         date.setAttribute('id', 'date');
         date.setAttribute('name', 'date');
         date.setAttribute('required', '');
+        (isEdit) ? date.value = controller.activeTask.date : date = date;
         form.appendChild(date);
 
         let footer = document.createElement('div');
         footer.classList.add('footer');
 
         let image2 = new Image();
-        image2.src = star;
+        if (isEdit) {
+            (controller.activeTask.priorityStatus) ? image2.src = fullstar : image2.src = star;
+        } else {
+            image2.src = star;
+        }
         image2.addEventListener('click', togglePriority);
         footer.appendChild(image2);
 
         let submit = document.createElement('button');
         submit.setAttribute('type', 'submit');
-        submit.setAttribute('id', 'add-task');
-        submit.textContent = 'Add Task';
+        if (!isEdit) {
+            submit.setAttribute('id', 'add-task');
+            submit.textContent = 'Add Task';
+        } else {
+            submit.setAttribute('id', 'edit-task');
+            submit.textContent = 'Edit Task';
+        }
         footer.appendChild(submit);
 
         form.appendChild(footer);
@@ -120,6 +143,7 @@ const DOM = (() => {
         let button = document.createElement('button');
         button.setAttribute('id', 'info');
         button.textContent = 'Info';
+        button.addEventListener('click', viewTask);
         right.appendChild(button);
 
         let image2 = new Image();
@@ -133,6 +157,7 @@ const DOM = (() => {
 
         let image3 = new Image();
         image3.src = edit;
+        image3.addEventListener('click', renderTaskForm);
         right.appendChild(image3);
 
         let image4 = new Image();
@@ -145,8 +170,60 @@ const DOM = (() => {
         header.parentNode.insertBefore(task, header.nextSibling);
     };
 
-    const editTask = () => {
+    const viewTask = (event) => {
+        let task = controller.linkTask(event);
 
+        let main = document.querySelector('main');
+        
+        let overlay = document.createElement('div');
+        overlay.setAttribute('id', 'overlay');
+
+        let viewContainer = document.createElement('div');
+        viewContainer.setAttribute('id', 'view-task');
+    
+        let header = document.createElement('div');
+        header.classList.add('header');
+
+        let header2 = document.createElement('h2');
+        header2.textContent = `${task.title}`;
+        header.appendChild(header2);
+
+        let image1 = new Image();
+        image1.src = remove;
+        image1.addEventListener('click', deleteForm);
+        header.appendChild(image1);
+
+        viewContainer.appendChild(header);
+
+        let details = document.createElement('p');
+        details.textContent = `${task.description}`;
+        viewContainer.appendChild(details);
+
+        let date = document.createElement('p');
+        date.textContent = `${task.date}`;
+        viewContainer.appendChild(date);
+
+        let priority = new Image();
+        (task.priorityStatus) ? priority.src = fullstar : priority.src = star;
+        viewContainer.appendChild(priority);
+
+        overlay.appendChild(viewContainer);
+
+        main.prepend(overlay);
+    };
+
+    const editTask = () => {
+        let header = controller.activeTask.DOMlink.children[0].children[1];
+        header.textContent = controller.activeTask.title;
+
+        let parentNode = controller.activeTask.DOMlink.children[1];
+
+        let oldPriority = controller.activeTask.DOMlink.children[1].children[1];
+
+        let newPriority = new Image();
+        (controller.activeTask.priorityStatus === true) ? newPriority.src = fullstar : newPriority.src = star;
+        newPriority.addEventListener('click', controller.togglePriority);
+        parentNode.replaceChild(newPriority, oldPriority);
     };
     const removeTask = (event) => {
         let removal = event.target.parentNode.parentNode;
