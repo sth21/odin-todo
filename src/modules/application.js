@@ -12,11 +12,11 @@ const application = (() => {
         let projectName = document.querySelector('#project-name').value
         storage[`${projectName}`] = [];
     };
-    const addLocation = () => {
+    const addTodayArray = () => {
 
     };
-    const removeProject = () => {
-
+    const removeProject = (arrayName) => {
+        delete storage[`${arrayName}`];
     };
     const addTask = () => {
         let page = storage[`${controller.activePage}`];
@@ -51,7 +51,7 @@ const application = (() => {
         (task.priorityStatus) ? task.priorityStatus = false : task.priorityStatus = true;
     };
 
-    return {addProject, addLocation, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {addProject, addTodayArray, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default application;

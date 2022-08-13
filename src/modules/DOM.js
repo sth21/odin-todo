@@ -8,7 +8,7 @@ import star from '../../dist/media/star.png';
 import edit from '../../dist/media/edit.png';
 import remove from '../../dist/media/remove.png';
 import fullstar from '../../dist/media/fullstar.png';
-import project from '../../dist/media/projects.png';
+import projecticon from '../../dist/media/projects.png';
 import add from '../../dist/media/add.png';
 
 const DOM = (() => {
@@ -109,23 +109,37 @@ const DOM = (() => {
 
         let header = document.querySelector('#projects > h2');
 
+        let project = document.createElement('div');
+        project.classList.add('project');
+
         let container = document.createElement('div');
         container.classList.add('container');
+        container.addEventListener('click', controller.changePage);
 
         let image1 = new Image();
-        image1.src = project;
+        image1.src = projecticon;
         container.appendChild(image1);
 
         let title = document.createElement('p');
         title.textContent = document.querySelector('form input').value;
         container.appendChild(title);
 
-        container.addEventListener('click', controller.changePage);
+        project.appendChild(container);
 
-        header.parentNode.insertBefore(container, header.nextSibling);
+        let trashDiv = document.createElement('div');
+        trashDiv.classList.add('trash-container');
+        trashDiv.addEventListener('click', controller.removeProject);
+
+        let trash = new Image();
+        trash.src = remove;
+        trashDiv.appendChild(trash);
+
+        project.appendChild(trashDiv);
+
+        header.parentNode.insertBefore(project, header.nextSibling);
     };
-    const removeProject = () => {
-
+    const removeProject = (container) => {
+        container.remove();
     };
     const renderTaskForm = (event) => {
         let isEdit = false;

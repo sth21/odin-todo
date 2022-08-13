@@ -24,8 +24,18 @@ const controller = (() => {
         DOM.addProject();
         DOM.deleteForm();
     };
-    const removeProject = () => {
-
+    const removeProject = (event) => {
+        let projectArray;
+        let container;
+        if (event.target.classList.contains('.trash-container')) {
+            container = event.target.previousSibling;
+        } else {
+            container = event.target.parentNode.previousSibling;
+        }
+        projectArray = container.children[1].textContent;
+        container = container.parentNode;
+        application.removeProject(projectArray);
+        DOM.removeProject(container);
     };
     const addTask = (event) => {
         event.preventDefault();
