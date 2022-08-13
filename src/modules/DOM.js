@@ -120,7 +120,7 @@ const DOM = (() => {
         title.textContent = document.querySelector('form input').value;
         container.appendChild(title);
 
-        projects.addEventListener('click', controller.changePage);
+        container.addEventListener('click', controller.changePage);
 
         header.parentNode.insertBefore(container, header.nextSibling);
     };

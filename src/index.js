@@ -9,14 +9,12 @@ const controller = (() => {
 
     const changePage = (event) => {
         if (event.target.nodeName === 'P') {
-            activePage = event.target.textContent;
+            controller.activePage = event.target.textContent;
         } else if (event.target.nodeName === 'IMG') {
-            activePage = event.target.nextSibling.textContent;
+            controller.activePage = event.target.nextSibling.textContent;
         } else {
-            activePage = event.target.children[1].textContent;
+            controller.activePage = event.target.children[1].textContent;
         }
-        console.log(activePage);
-        console.log(controller.activePage);
         DOM.removePage();
         DOM.renderPage(event);
     };
