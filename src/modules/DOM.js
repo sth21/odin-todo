@@ -20,19 +20,24 @@ const DOM = (() => {
         body.appendChild(main);
     };
     const renderPage = (event) => {
+        let taskList;
         let main = document.querySelector('main');
         let page = document.createElement('h2');
-        if (event.target.nodeName === 'P') {
-            page.textContent = event.target.textContent;
-        } else if (event.target.nodeName === 'IMG') {
-            page.textContent = event.target.nextSibling.textContent;
+        if (event === undefined) {
+            taskList = [];
+            page.textContent = 'inbox';
         } else {
-            page.textContent = event.target.children[1].textContent;
+            taskList = storage[`${controller.activePage}`];
+            if (event.target.nodeName === 'P') {
+                page.textContent = event.target.textContent;
+            } else if (event.target.nodeName === 'IMG') {
+                page.textContent = event.target.nextSibling.textContent;
+            } else {
+                page.textContent = event.target.children[1].textContent;
+            }
         }
 
         main.appendChild(page);
-
-        let taskList = storage[`${controller.activePage}`];
 
         for (let i = 0; i < taskList.length; ++i) {
             addTask();
@@ -114,6 +119,8 @@ const DOM = (() => {
         let title = document.createElement('p');
         title.textContent = document.querySelector('form input').value;
         container.appendChild(title);
+
+        projects.addEventListener('click', controller.changePage);
 
         header.parentNode.insertBefore(container, header.nextSibling);
     };
@@ -215,10 +222,11 @@ const DOM = (() => {
     const addTask = () => {
         let main = document.querySelector('main');
         let header = document.querySelector('main > h2');
+        let page = storage[`${controller.activePage}`];
 
         let task = document.createElement('div');
         task.setAttribute('id', 'task');
-        storage.inbox[storage.inbox.length - 1].DOMlink = task;
+        page[page.length - 1].DOMlink = task;
         
         let left = document.createElement('div');
         left.classList.add('left');
@@ -229,7 +237,7 @@ const DOM = (() => {
         left.appendChild(image1);
         
         let title = document.createElement('h3');
-        title.textContent = storage.inbox[storage.inbox.length - 1].title;
+        title.textContent = page[page.length - 1].title;
         left.appendChild(title);
 
         task.appendChild(left);
@@ -244,7 +252,7 @@ const DOM = (() => {
         right.appendChild(button);
 
         let image2 = new Image();
-        if (storage.inbox[storage.inbox.length - 1].priorityStatus === false) {
+        if (page[page.length - 1].priorityStatus === false) {
             image2.src = star;
         } else {
             image2.src = fullstar;
@@ -264,7 +272,7 @@ const DOM = (() => {
 
         task.appendChild(right);
 
-        controller.activeTask = storage.inbox[storage.inbox.length - 1]; // Allow method to be used to renderPage and add tasks
+        controller.activeTask = page[page.length - 1]; // Allow method to be used to renderPage and add tasks
     
         header.parentNode.insertBefore(task, header.nextSibling);
     };

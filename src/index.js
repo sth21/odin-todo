@@ -4,15 +4,21 @@ import application from './modules/application.js';
 import taskFactory from './modules/task.js';
 
 const controller = (() => {
-    let isPageChanging = false;
     let activePage = 'inbox';
     let activeTask;
 
     const changePage = (event) => {
-        isPageChanging = true;
+        if (event.target.nodeName === 'P') {
+            activePage = event.target.textContent;
+        } else if (event.target.nodeName === 'IMG') {
+            activePage = event.target.nextSibling.textContent;
+        } else {
+            activePage = event.target.children[1].textContent;
+        }
+        console.log(activePage);
+        console.log(controller.activePage);
         DOM.removePage();
         DOM.renderPage(event);
-        isPageChanging = false;
     };
     const addProject = (event) => {
         event.preventDefault();
@@ -54,26 +60,25 @@ const controller = (() => {
         }
     } 
     const linkTask = (event) => {
-        for (let i = 0; i < storage.inbox.length; ++i) {
-            if (storage.inbox[i].DOMlink === event.target.parentNode.parentNode) {
-                return storage.inbox[i];
+        for (let i = 0; i < storage[`${controller.activePage}`].length; ++i) {
+            if (storage[`${controller.activePage}`][i].DOMlink === event.target.parentNode.parentNode) {
+                return storage[`${controller.activePage}`][i];
             }
         }
     };
 
     // Event Listeners
     const inboxBtn = document.querySelector('#inbox');
-    inboxBtn.addEventListener('click', changePage)
+    inboxBtn.addEventListener('click', changePage);
 
     const addProjectBtn = document.querySelector('#add-project-form');
     addProjectBtn.addEventListener('click', DOM.renderProjectForm);
 
-    const addTaskBtn = document.querySelector('#add-task-form');
-    addTaskBtn.addEventListener('click', DOM.renderTaskForm);
-
     document.addEventListener('submit', checkFormPurpose);
 
-    return {isPageChanging, activePage, activeTask, changePage, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
+    return {activePage, activeTask, changePage, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
 })();
+
+DOM.renderPage();
 
 export default controller;

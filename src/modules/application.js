@@ -19,6 +19,7 @@ const application = (() => {
 
     };
     const addTask = () => {
+        let page = storage[`${controller.activePage}`];
         let title = document.querySelector('#title').value;
         let description = document.querySelector('#description').value;
         let date = document.querySelector('#date').value;
@@ -28,7 +29,7 @@ const application = (() => {
         } else {
             isPriority = true;
         }
-        storage.inbox[storage.inbox.length] = taskFactory(title, description, date, isPriority);
+        page[page.length] = taskFactory(title, description, date, isPriority);
     };
     const editTask = () => {
         controller.activeTask.title = document.querySelector('#title').value;
@@ -38,9 +39,10 @@ const application = (() => {
         (priorityStatus.src === star) ? controller.activeTask.priorityStatus = false : controller.activeTask.priorityStatus = true;
     };
     const removeTask = (event) => {
-        for (let i = 0; i < storage.inbox.length; ++i) {
-            if (storage.inbox[i].DOMlink === event.target.parentNode.parentNode) {
-                storage.inbox.splice(i, 1);
+        let page = storage[`${controller.activePage}`];
+        for (let i = 0; i < page.length; ++i) {
+            if (page[i].DOMlink === event.target.parentNode.parentNode) {
+                page.splice(i, 1);
             }
         }
     };
