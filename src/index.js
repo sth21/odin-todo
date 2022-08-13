@@ -4,7 +4,16 @@ import application from './modules/application.js';
 import taskFactory from './modules/task.js';
 
 const controller = (() => {
+    let isPageChanging = false;
+    let activePage = 'inbox';
     let activeTask;
+
+    const changePage = (event) => {
+        isPageChanging = true;
+        DOM.removePage();
+        DOM.renderPage(event);
+        isPageChanging = false;
+    };
     const addProject = (event) => {
         event.preventDefault();
         application.addProject();
@@ -53,6 +62,9 @@ const controller = (() => {
     };
 
     // Event Listeners
+    const inboxBtn = document.querySelector('#inbox');
+    inboxBtn.addEventListener('click', changePage)
+
     const addProjectBtn = document.querySelector('#add-project-form');
     addProjectBtn.addEventListener('click', DOM.renderProjectForm);
 
@@ -61,7 +73,7 @@ const controller = (() => {
 
     document.addEventListener('submit', checkFormPurpose);
 
-    return {activeTask, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
+    return {isPageChanging, activePage, activeTask, changePage, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
 })();
 
 export default controller;

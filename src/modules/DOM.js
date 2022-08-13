@@ -9,10 +9,49 @@ import edit from '../../dist/media/edit.png';
 import remove from '../../dist/media/remove.png';
 import fullstar from '../../dist/media/fullstar.png';
 import project from '../../dist/media/projects.png';
+import add from '../../dist/media/add.png';
 
 const DOM = (() => {
-    const renderPage = () => {
+    const removePage = () => {
+        let body = document.querySelector('body');
+        let main = document.querySelector('main');
+        body.removeChild(main);
+        main = document.createElement('main');
+        body.appendChild(main);
+    };
+    const renderPage = (event) => {
+        let main = document.querySelector('main');
+        let page = document.createElement('h2');
+        if (event.target.nodeName === 'P') {
+            page.textContent = event.target.textContent;
+        } else if (event.target.nodeName === 'IMG') {
+            page.textContent = event.target.nextSibling.textContent;
+        } else {
+            page.textContent = event.target.children[1].textContent;
+        }
 
+        main.appendChild(page);
+
+        let taskList = storage[`${controller.activePage}`];
+
+        for (let i = 0; i < taskList.length; ++i) {
+            addTask();
+            editTask(taskList[i]);
+        }
+
+        let addTaskForm = document.createElement('div');
+        addTaskForm.setAttribute('id', 'add-task-form');
+
+        let image1 = new Image();
+        image1.src = add;
+        addTaskForm.appendChild(image1);
+
+        let title = document.createElement('p');
+        title.textContent = 'Add Task';
+        addTaskForm.appendChild(title);
+
+        addTaskForm.addEventListener('click', renderTaskForm);
+        main.appendChild(addTaskForm);
     };
     const renderProjectForm = () => {
         let body = document.querySelector('body');
@@ -225,6 +264,8 @@ const DOM = (() => {
 
         task.appendChild(right);
 
+        controller.activeTask = storage.inbox[storage.inbox.length - 1]; // Allow method to be used to renderPage and add tasks
+    
         header.parentNode.insertBefore(task, header.nextSibling);
     };
 
@@ -270,13 +311,16 @@ const DOM = (() => {
         main.prepend(overlay);
     };
 
-    const editTask = () => {
+    const editTask = (object) => {
         let header = controller.activeTask.DOMlink.children[0].children[1];
-        header.textContent = controller.activeTask.title;
 
         let parentNode = controller.activeTask.DOMlink.children[1];
 
         let oldPriority = controller.activeTask.DOMlink.children[1].children[1];
+
+        (object !== undefined) ? controller.activeTask = object : controller.activeTask = controller.activeTask; // Allows method to be used to renderPage and edit tasks
+        
+        header.textContent = controller.activeTask.title;
 
         let newPriority = new Image();
         (controller.activeTask.priorityStatus === true) ? newPriority.src = fullstar : newPriority.src = star;
@@ -300,7 +344,7 @@ const DOM = (() => {
         event.target.parentNode.replaceChild(newElement, oldElement);
     };
 
-    return {renderPage, renderTaskForm, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {removePage, renderPage, renderTaskForm, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default DOM;
