@@ -87,6 +87,8 @@ const DOM = (() => {
         name.setAttribute('placeholder', 'project name');
         name.setAttribute('name', 'projectName');
         name.setAttribute('required', '');
+        name.setAttribute('minlength', '1');
+        name.setAttribute('maxlength', '14');
         form.appendChild(name);
 
         let footer = document.createElement('div');
@@ -179,6 +181,8 @@ const DOM = (() => {
         title.setAttribute('placeholder', 'title');
         title.setAttribute('name', 'title');
         title.setAttribute('required', '');
+        title.setAttribute('minlength', '1');
+        title.setAttribute('maxlength', '26');
         (isEdit) ? title.value = controller.activeTask.title : title = title;
         form.appendChild(title);
 
@@ -197,6 +201,7 @@ const DOM = (() => {
         date.setAttribute('id', 'date');
         date.setAttribute('name', 'date');
         date.setAttribute('required', '');
+        date.setAttribute('max', '9999-12-31');
         (isEdit) ? date.value = controller.activeTask.date : date = date;
         form.appendChild(date);
 
@@ -350,8 +355,7 @@ const DOM = (() => {
         parentNode.replaceChild(newPriority, oldPriority);
     };
     const removeTask = (event) => {
-        let removal = event.target.parentNode.parentNode;
-        removal.remove();
+        event.target.parentNode.parentNode.remove();
     };
 
     const togglePriority = (event) => {

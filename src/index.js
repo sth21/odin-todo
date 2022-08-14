@@ -7,6 +7,12 @@ const controller = (() => {
     let activePage = 'inbox';
     let activeTask;
 
+    const renderTodayPage = (event) => {
+        application.createTodayArray();
+        controller.activePage = 'today';
+        DOM.removePage();
+        DOM.renderPage(event);
+    }
     const changePage = (event) => {
         if (event.target.nodeName === 'P') {
             controller.activePage = event.target.textContent;
@@ -20,6 +26,10 @@ const controller = (() => {
     };
     const addProject = (event) => {
         event.preventDefault();
+        if (application.validateProjectName() === false) {
+            alert('Name Already Taken By Another Folder. Please Use Another Name.');
+            return;
+        } 
         application.addProject();
         DOM.addProject();
         DOM.deleteForm();
@@ -36,6 +46,9 @@ const controller = (() => {
         container = container.parentNode;
         application.removeProject(projectArray);
         DOM.removeProject(container);
+        if (controller.activePage === projectArray) {
+            DOM.removePage();
+        }
     };
     const addTask = (event) => {
         event.preventDefault();
@@ -78,6 +91,9 @@ const controller = (() => {
     // Event Listeners
     const inboxBtn = document.querySelector('#inbox');
     inboxBtn.addEventListener('click', changePage);
+
+    const todayBtn = document.querySelector('#today');
+    todayBtn.addEventListener('click', renderTodayPage);
 
     const addProjectBtn = document.querySelector('#add-project-form');
     addProjectBtn.addEventListener('click', DOM.renderProjectForm);
