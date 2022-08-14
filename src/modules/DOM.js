@@ -10,8 +10,33 @@ import remove from '../../src/media/remove.png';
 import fullstar from '../../src/media/fullstar.png';
 import projecticon from '../../src/media/projects.png';
 import add from '../../src/media/add.png';
+import box from '../../src/media/inbox.png';
+import calendar from '../../src/media/today.png';
+import githublogo from '../../src/media/githublogo.png';
 
 const DOM = (() => {
+    const renderImages = () => {
+        let inbox = document.querySelector('#inbox');
+        let today = document.querySelector('#today');
+        let creator = document.querySelector('.creator');
+        let addProjectForm = document.querySelector('#add-project-form');
+
+        let inboxImg = new Image();
+        inboxImg.src = box;
+        inbox.prepend(inboxImg);
+
+        let todayImg = new Image();
+        todayImg.src = calendar;
+        today.prepend(todayImg);
+
+        let creatorImg = new Image();
+        creatorImg.src = githublogo;
+        creator.prepend(creatorImg);
+
+        let addProjectFormImg = new Image();
+        addProjectFormImg.src = add;
+        addProjectForm.prepend(addProjectFormImg);
+    };
     const removePage = () => {
         let body = document.querySelector('body');
         let main = document.querySelector('main');
@@ -370,7 +395,7 @@ const DOM = (() => {
         event.target.parentNode.replaceChild(newElement, oldElement);
     };
 
-    return {removePage, renderPage, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {renderImages, removePage, renderPage, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default DOM;

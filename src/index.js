@@ -103,5 +103,5 @@ const controller = (() => {
 })();
 
 DOM.renderPage();
-
+DOM.renderImages();
 export default controller;
