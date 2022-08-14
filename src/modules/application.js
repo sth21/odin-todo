@@ -1,7 +1,6 @@
 import controller from '../index.js';
 import storage from './storage.js';
 import taskFactory from './task.js';
-import DOM from './DOM.js';
 
 // Media Imports
 import star from '../../dist/media/star.png';
@@ -108,7 +107,7 @@ const application = (() => {
         (task.priorityStatus) ? task.priorityStatus = false : task.priorityStatus = true;
     };
 
-    return {addProject,validateProjectName, createTodayArray, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {addProject, validateProjectName, createTodayArray, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default application;

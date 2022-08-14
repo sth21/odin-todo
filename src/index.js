@@ -1,7 +1,6 @@
 import DOM from './modules/DOM.js';
 import storage from './modules/storage.js'
 import application from './modules/application.js';
-import taskFactory from './modules/task.js';
 
 const controller = (() => {
     let activePage = 'inbox';
@@ -100,7 +99,7 @@ const controller = (() => {
 
     document.addEventListener('submit', checkFormPurpose);
 
-    return {activePage, activeTask, changePage, addProject, removeProject, checkFormPurpose, linkTask, editTask, removeTask, togglePriority};
+    return {activePage, activeTask, changePage, removeProject, linkTask, removeTask, togglePriority};
 })();
 
 DOM.renderPage();

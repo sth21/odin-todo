@@ -370,7 +370,7 @@ const DOM = (() => {
         event.target.parentNode.replaceChild(newElement, oldElement);
     };
 
-    return {removePage, renderPage, renderTaskForm, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
+    return {removePage, renderPage, renderProjectForm, deleteForm, addProject, removeProject, addTask, editTask, removeTask, togglePriority};
 })();
 
 export default DOM;
