@@ -3,8 +3,8 @@ import storage from './storage.js';
 import taskFactory from './task.js';
 
 // Media Imports
-import star from '../../dist/media/star.png';
-import fullstar from '../../dist/media/fullstar.png';
+import star from '../../src/media/star.png';
+import fullstar from '../../src/media/fullstar.png';
 
 const application = (() => {
     const addProject = () => {

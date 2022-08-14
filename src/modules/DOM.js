@@ -3,13 +3,13 @@ import controller from '../index.js';
 import storage from './storage.js';
 
 // Media
-import circle from '../../dist/media/circle.png';
-import star from '../../dist/media/star.png';
-import edit from '../../dist/media/edit.png';
-import remove from '../../dist/media/remove.png';
-import fullstar from '../../dist/media/fullstar.png';
-import projecticon from '../../dist/media/projects.png';
-import add from '../../dist/media/add.png';
+import circle from '../../src/media/circle.png';
+import star from '../../src/media/star.png';
+import edit from '../../src/media/edit.png';
+import remove from '../../src/media/remove.png';
+import fullstar from '../../src/media/fullstar.png';
+import projecticon from '../../src/media/projects.png';
+import add from '../../src/media/add.png';
 
 const DOM = (() => {
     const removePage = () => {
